@@ -1,4 +1,5 @@
 import { FiArrowLeft, FiArrowRight, FiCheckCircle } from 'react-icons/fi'
+
 import { personalInfo } from '../translations.js'
 import { useState } from 'react'
 
@@ -32,14 +33,11 @@ export default function Hero({ lang, t }) {
                 className="relative hero-img-wrapper rounded-[2rem] p-[3px]"
                 style={{ background: 'linear-gradient(135deg, #4F8EF7, #9B6EF3, #4ade80)', zIndex: 1 }}
               >
-                <div
+                {/* <div
                   className="w-full h-full rounded-[1.9rem] overflow-hidden flex items-center justify-center"
                   style={{ background: 'var(--bg-primary)' }}
                 >
                   {!imgError ? (
-                    /* ✅ PERF: <picture> with WebP + JPEG fallback.
-                       fetchpriority="high" tells browser this is LCP image.
-                       width/height prevent CLS (intrinsic size declared). */
                     <picture>
                       <source
                         type="image/webp"
@@ -47,16 +45,28 @@ export default function Hero({ lang, t }) {
                       />
                       <img
                         src="/photopr-opt.jpg"
-                        srcSet="/photopr-opt.jpg 1x"
                         alt={personalInfo.name}
-                        width="320"
-                        height="320"
                         fetchpriority="high"
                         decoding="sync"
                         onError={() => setImgError(true)}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                       />
                     </picture>
+                  ) : (
+                    <span className="text-6xl font-extrabold gradient-text font-mono-tag">MM</span>
+                  )}
+                </div> */}
+                <div
+                  className="w-full h-full rounded-[1.9rem] overflow-hidden flex items-center justify-center"
+                  style={{ background: 'var(--bg-primary)' }}
+                >
+                  {!imgError ? (
+                    <img
+                      src="/photopr-opt.jpg"
+                      alt={personalInfo.name}
+                      onError={() => setImgError(true)}
+                      className="w-full h-full object-cover"
+                    />
                   ) : (
                     <span className="text-6xl font-extrabold gradient-text font-mono-tag">MM</span>
                   )}
