@@ -107,24 +107,25 @@ export default function Navbar({ lang, setLang, t }) {
           ))}
         </div>
 
-        <div className="md:flex items-center gap-2">
+        <div className="md:hidden flex items-center gap-2">
           <button
             onClick={toggleTheme}
-            className="p-2.5 rounded-xl transition-colors duration-200"
+            className="p-2 rounded-lg"
             style={{ background: 'var(--bg-card)', border: '1px solid var(--border-card)' }}
             aria-label="Toggle theme"
           >
-            {theme === 'dark' ? <HiSun size={17} className="text-[#4F8EF7]" /> : <HiMoon size={17} className="text-[#9B6EF3]" />}
+            {theme === 'dark' ? <HiSun size={18} className="text-[#4F8EF7]" /> : <HiMoon size={18} className="text-[#9B6EF3]" />}
           </button>
 
+          {/* Language icon button — mobile only */}
           <div className="relative" ref={langRef}>
             <button
               onClick={() => setLangOpen(!langOpen)}
-              className="flex items-center gap-1.5 px-3 py-2.5 rounded-xl transition-colors duration-200"
+              className="p-2 rounded-lg"
               style={{ background: 'var(--bg-card)', border: '1px solid var(--border-card)', color: 'var(--text-secondary)' }}
+              aria-label="Change language"
             >
-              <FiGlobe size={16} />
-              <span className="text-xs font-bold uppercase font-mono-tag">{lang}</span>
+              <FiGlobe size={18} />
             </button>
             <div
               className="absolute top-full mt-2 end-0 w-36 rounded-2xl shadow-xl z-50 p-1.5"
@@ -155,23 +156,6 @@ export default function Navbar({ lang, setLang, t }) {
             </div>
           </div>
 
-          <button
-            onClick={() => scrollTo('contact')}
-            className="inline-flex items-center px-4 py-2.5 rounded-xl text-sm font-semibold bg-gradient-to-r from-[#4F8EF7] to-[#9B6EF3] text-white hover:opacity-90 transition-opacity shadow-lg shadow-blue-500/20"
-          >
-            {t.nav.contact}
-          </button>
-        </div>
-
-        <div className="md:hidden flex items-center gap-2">
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-lg"
-            style={{ background: 'var(--bg-card)', border: '1px solid var(--border-card)' }}
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <HiSun size={18} className="text-[#4F8EF7]" /> : <HiMoon size={18} className="text-[#9B6EF3]" />}
-          </button>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="p-2 rounded-lg"
