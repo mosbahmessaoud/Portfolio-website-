@@ -1,5 +1,4 @@
 import { FiArrowLeft, FiArrowRight, FiCheckCircle } from 'react-icons/fi'
-
 import { personalInfo } from '../translations.js'
 import { useState } from 'react'
 
@@ -7,7 +6,8 @@ export default function Hero({ lang, t }) {
   const isRtl = lang === 'ar'
   const [imgError, setImgError] = useState(false)
 
-  const scrollTo = (id) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  const scrollTo = (id) =>
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center overflow-hidden pt-24 md:pt-20">
@@ -17,45 +17,64 @@ export default function Hero({ lang, t }) {
           {/* ── Image side ── */}
           <div className="lg:col-span-5 flex justify-center lg:justify-start order-1">
             <div className="fade-up d0 relative">
+              {/* ✅ PERF: Static glow — no blur animation */}
               <div
-                className="absolute inset-0 rounded-[2rem] blur-3xl opacity-40 scale-90"
-                style={{ background: 'linear-gradient(135deg, #4F8EF7, #9B6EF3, #4ade80)' }}
+                className="absolute inset-0 rounded-[2rem] opacity-35 scale-90"
+                style={{
+                  background: 'linear-gradient(135deg, #4F8EF7, #9B6EF3, #4ade80)',
+                  filter: 'blur(40px)',
+                  zIndex: 0,
+                }}
+                aria-hidden="true"
               />
+              {/* ✅ CLS FIX: hero-img-wrapper has explicit width/height in CSS */}
               <div
-                className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-[2rem] p-[3px]"
-                style={{ background: 'linear-gradient(135deg, #4F8EF7, #9B6EF3, #4ade80)' }}
+                className="relative hero-img-wrapper rounded-[2rem] p-[3px]"
+                style={{ background: 'linear-gradient(135deg, #4F8EF7, #9B6EF3, #4ade80)', zIndex: 1 }}
               >
                 <div
                   className="w-full h-full rounded-[1.9rem] overflow-hidden flex items-center justify-center"
                   style={{ background: 'var(--bg-primary)' }}
                 >
                   {!imgError ? (
-                    <img
-                      src={personalInfo.avatar}
-                      alt={personalInfo.name}
-                      onError={() => setImgError(true)}
-                      className="w-full h-full object-cover"
-                    />
+                    /* ✅ PERF: <picture> with WebP + JPEG fallback.
+                       fetchpriority="high" tells browser this is LCP image.
+                       width/height prevent CLS (intrinsic size declared). */
+                    <picture>
+                      <source
+                        type="image/webp"
+                        srcSet="/photopr.webp 1x, /photopr@2x.webp 2x"
+                      />
+                      <img
+                        src="/photopr-opt.jpg"
+                        srcSet="/photopr-opt.jpg 1x"
+                        alt={personalInfo.name}
+                        width="320"
+                        height="320"
+                        fetchpriority="high"
+                        decoding="sync"
+                        onError={() => setImgError(true)}
+                        className="w-full h-full object-cover"
+                      />
+                    </picture>
                   ) : (
                     <span className="text-6xl font-extrabold gradient-text font-mono-tag">MM</span>
                   )}
                 </div>
               </div>
 
-             {/* Live status badge */}
-             <div className="absolute -bottom-4 inset-x-0 flex justify-center">
-              <div className="flex items-center gap-2 px-3.5 py-2 rounded-2xl liquid-card">
-                <span className="relative flex w-2 h-2 shrink-0">
-                  <span className="absolute inline-flex w-full h-full rounded-full bg-[#4ade80] pulse-dot" />
-                  <span className="relative inline-flex rounded-full w-2 h-2 bg-[#4ade80]" />
-                </span>
-                <span className="text-xs font-bold font-mono-tag whitespace-nowrap" style={{ color: 'var(--text-primary)' }}>
-                  {t.status.live} · {t.hero.statApps}
-                </span>
+              {/* Live status badge */}
+              <div className="absolute -bottom-4 inset-x-0 flex justify-center" style={{ zIndex: 2 }}>
+                <div className="flex items-center gap-2 px-3.5 py-2 rounded-2xl liquid-card">
+                  <span className="relative flex w-2 h-2 shrink-0">
+                    <span className="absolute inline-flex w-full h-full rounded-full bg-[#4ade80] pulse-dot" />
+                    <span className="relative inline-flex rounded-full w-2 h-2 bg-[#4ade80]" />
+                  </span>
+                  <span className="text-xs font-bold font-mono-tag whitespace-nowrap" style={{ color: 'var(--text-primary)' }}>
+                    {t.status.live} · {t.hero.statApps}
+                  </span>
+                </div>
               </div>
-            </div>
-
-              
             </div>
           </div>
 
@@ -75,14 +94,14 @@ export default function Hero({ lang, t }) {
             </div>
 
             {/* Title */}
-            <h3
+            <h1
               className="fade-up d1 text-4xl sm:text-5xl md:text-5xl font-extrabold leading-[1.1] tracking-tight max-w-2xl"
               style={{ color: 'var(--text-primary)' }}
             >
               {t.hero.title1}
-            <br/>
+              <br />
               <span className="gradient-text">{t.hero.title2}</span>
-            </h3>
+            </h1>
 
             {/* Subtitle */}
             <p
@@ -125,7 +144,6 @@ export default function Hero({ lang, t }) {
               ))}
             </div>
           </div>
-
         </div>
 
         {/* ── Live status terminal strip ── */}

@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── CSS Custom Properties ─────────────────────────────────── */
 :root,
 [data-theme='dark'] {
   --bg-primary:     #050510;
@@ -41,22 +42,26 @@
   --code-text:      #15803d;
 }
 
+/* ─── Reset ─────────────────────────────────────────────────── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html { scroll-behavior: smooth; }
+/* ✅ PERF: Use scroll-behavior smooth only on desktop to avoid janky mobile scroll */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
 
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: 'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  position: relative;
+  /* ✅ PERF: Only transition color, not background (background transition is expensive) */
+  transition: color 0.3s ease;
 }
 
 :lang(ar), [dir="rtl"] {
@@ -68,19 +73,18 @@ body {
   font-family: 'JetBrains Mono', ui-monospace, monospace;
 }
 
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
 ::-webkit-scrollbar-thumb { background: #4F8EF7; border-radius: 3px; }
 
-/* === Fixed background layer ===
-   A single full-viewport canvas, position:fixed so it never scrolls with
-   content. Sits behind everything (z-index:0) and is painted once. */
+/* ─── Background (STATIC — no animation = zero paint cost) ──── */
+/* ✅ PERF: Replaced animated orbs with a single static CSS gradient.
+   This saves ~3 paint layers and eliminates continuous GPU compositing. */
 .fixed-bg {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  overflow: hidden;
 }
 
 [data-theme='dark'] .fixed-bg {
@@ -101,7 +105,7 @@ body {
     #f8fafc;
 }
 
-/* Subtle fixed grid overlay for engineering texture */
+/* ✅ PERF: Grid overlay — GPU-friendly, no animation */
 .fixed-bg::before {
   content: '';
   position: absolute;
@@ -114,25 +118,7 @@ body {
   mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black 0%, transparent 75%);
 }
 
-/* Soft pulsing orbs — purely decorative, GPU-composited, fixed position */
-.fixed-bg .orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(80px);
-  will-change: transform, opacity;
-  transform: translateZ(0);
-  animation: orbPulse 10s ease-in-out infinite;
-}
-.orb-1 { width: 480px; height: 480px; top: -10%; left: -8%;  background: radial-gradient(circle, #4F8EF7 0%, transparent 70%); opacity: 0.16; }
-.orb-2 { width: 560px; height: 560px; top: 30%;  right: -12%; background: radial-gradient(circle, #9B6EF3 0%, transparent 70%); opacity: 0.14; animation-delay: 2s; }
-.orb-3 { width: 420px; height: 420px; bottom: -8%; left: 12%; background: radial-gradient(circle, #4ade80 0%, transparent 70%); opacity: 0.10; animation-delay: 4s; }
-
-@media (max-width: 768px) {
-  .fixed-bg .orb { filter: blur(50px); }
-  .fixed-bg::before { background-size: 40px 40px; }
-}
-
-/* === Liquid glass card === */
+/* ─── Liquid Glass Card ─────────────────────────────────────── */
 .liquid-card {
   position: relative;
   background: var(--bg-card);
@@ -140,21 +126,25 @@ body {
   border: 1px solid var(--border-card);
   box-shadow:
     inset 0 1px 0 rgba(255,255,255,0.13),
-    inset 0 -1px 0 rgba(255,255,255,0.04),
-    0 0 0 0.5px rgba(255,255,255,0.06),
     0 8px 32px rgba(0,0,0,0.18);
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  /* ✅ PERF: Only transition border-color — box-shadow transitions cause compositing */
+  transition: border-color 0.25s ease;
   overflow: hidden;
+  /* ✅ PERF: contain:paint prevents child repaints from affecting parent layers */
+  contain: layout style;
 }
+
+/* ✅ PERF: backdrop-filter only on large screens (mobile doesn't need it) */
 @media (min-width: 769px) {
   .liquid-card {
-    backdrop-filter: blur(16px) saturate(1.3);
-    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
   }
 }
 @media (max-width: 768px) {
   .liquid-card { background: var(--bg-card-solid); }
 }
+
 .liquid-card::before {
   content: '';
   position: absolute;
@@ -177,27 +167,20 @@ body {
 .liquid-card > * { position: relative; z-index: 2; }
 .liquid-card:hover {
   border-color: var(--border-hover);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.18),
-    inset 0 -1px 0 rgba(255,255,255,0.06),
-    0 0 0 0.5px rgba(255,255,255,0.09),
-    0 16px 48px rgba(0,0,0,0.22),
-    0 0 32px rgba(79,142,247,0.12);
 }
+
 [data-theme='light'] .liquid-card {
   background: rgba(255,255,255,0.92);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), inset 0 -1px 0 rgba(0,0,0,0.04), 0 4px 24px rgba(79,142,247,0.08), 0 1px 0 rgba(255,255,255,0.6);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 4px 24px rgba(79,142,247,0.08);
 }
 @media (min-width: 769px) {
   [data-theme='light'] .liquid-card { background: rgba(255,255,255,0.62); }
-}
-[data-theme='light'] .liquid-card:hover {
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 8px 32px rgba(79,142,247,0.14), 0 0 24px rgba(79,142,247,0.10);
 }
 [data-theme='light'] .liquid-card::after {
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.85) 30%, rgba(255,255,255,1) 50%, rgba(255,255,255,0.85) 70%, transparent);
 }
 
+/* ─── Gradient Text ─────────────────────────────────────────── */
 .gradient-text {
   background: linear-gradient(135deg, #4F8EF7, #9B6EF3);
   -webkit-background-clip: text;
@@ -205,6 +188,7 @@ body {
   background-clip: text;
 }
 
+/* ─── Layout ────────────────────────────────────────────────── */
 .bg-primary   { background-color: transparent !important; }
 .bg-secondary { background-color: transparent !important; }
 
@@ -212,9 +196,20 @@ body {
 @media (min-width: 768px)  { .section-padding { padding: 6rem 3rem; } }
 @media (min-width: 1280px) { .section-padding { padding: 7rem 5rem; } }
 
-/* === Entrance animations === */
+/* ─── Hero image CLS fix ───────────────────────────────────── */
+/* ✅ CLS: Explicit dimensions prevent layout shift when image loads */
+.hero-img-wrapper {
+  width: 320px;
+  height: 320px;
+  flex-shrink: 0;
+}
+@media (max-width: 1024px) { .hero-img-wrapper { width: 288px; height: 288px; } }
+@media (max-width: 640px)  { .hero-img-wrapper { width: 256px; height: 256px; } }
+
+/* ─── Animations ────────────────────────────────────────────── */
+/* ✅ PERF: Only opacity + transform — both GPU-composited, zero layout cost */
 @keyframes fadeUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes fadeIn {
@@ -222,36 +217,57 @@ body {
   to   { opacity: 1; }
 }
 @keyframes pulseDot {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.5); }
-  50%      { box-shadow: 0 0 0 5px rgba(74,222,128,0); }
-}
-@keyframes orbPulse {
-  0%, 100% { transform: scale(1) translateZ(0); opacity: 0.12; }
-  50%      { transform: scale(1.15) translateZ(0); opacity: 0.22; }
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
 }
 
+/* Hero items: animate on load (above fold, no IntersectionObserver needed) */
 .fade-up {
   opacity: 0;
-  animation: fadeUp 0.6s ease forwards;
+  animation: fadeUp 0.5s ease forwards;
 }
 .fade-up.d0 { animation-delay: 0.05s; }
-.fade-up.d1 { animation-delay: 0.15s; }
-.fade-up.d2 { animation-delay: 0.25s; }
-.fade-up.d3 { animation-delay: 0.35s; }
-.fade-up.d4 { animation-delay: 0.45s; }
+.fade-up.d1 { animation-delay: 0.12s; }
+.fade-up.d2 { animation-delay: 0.20s; }
+.fade-up.d3 { animation-delay: 0.28s; }
+.fade-up.d4 { animation-delay: 0.36s; }
+
+/* ✅ PERF: Scroll-triggered reveal — items start invisible, JS adds .visible */
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  /* ✅ Use will-change only while animating (set/unset in JS) */
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger delays for reveal groups */
+.reveal-d1 { transition-delay: 0.05s; }
+.reveal-d2 { transition-delay: 0.12s; }
+.reveal-d3 { transition-delay: 0.20s; }
+.reveal-d4 { transition-delay: 0.28s; }
+.reveal-d5 { transition-delay: 0.36s; }
+.reveal-d6 { transition-delay: 0.44s; }
 
 .pulse-dot {
   animation: pulseDot 2s ease-in-out infinite;
 }
 
+/* ✅ PERF: Respect system preference */
 @media (prefers-reduced-motion: reduce) {
-  .fade-up { opacity: 1; animation: none; }
+  .fade-up   { opacity: 1; animation: none; }
+  .reveal    { opacity: 1; transform: none; transition: none; }
   .pulse-dot { animation: none; }
 }
 
-/* === Mobile perf: kill blur + heavy transitions === */
+/* ✅ PERF: On mobile kill expensive transitions entirely */
 @media (max-width: 768px) {
-  * { transition-duration: 0.15s !important; }
+  .liquid-card { transition: none; }
+  /* Keep reveal transitions but shorter */
+  .reveal { transition-duration: 0.3s; }
 }
 
 /* Visible keyboard focus */

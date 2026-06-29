@@ -3,11 +3,11 @@ import LiquidCard from './LiquidCard.jsx'
 
 export default function About({ t }) {
   return (
-    <section id="about" className="section-padding relative cv-auto">
+    <section id="about" className="section-padding relative">
       <div className="max-w-6xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-          <div className="lg:col-span-7">
+          <div className="lg:col-span-7 reveal reveal-d1">
             <span
               className="text-xl font-bold tracking-widest uppercase font-mono-tag"
               style={{ color: '#4F8EF7' }}
@@ -28,7 +28,7 @@ export default function About({ t }) {
             </p>
           </div>
 
-          <div className="lg:col-span-5">
+          <div className="lg:col-span-5 reveal reveal-d2">
             <LiquidCard className="p-7">
               <div className="flex items-center gap-3 mb-5">
                 <div

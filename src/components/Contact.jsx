@@ -1,13 +1,12 @@
 import { FiArrowUpRight, FiGithub, FiLinkedin, FiMail, FiMapPin, FiPhone } from 'react-icons/fi'
-
 import LiquidCard from './LiquidCard.jsx'
 import { personalInfo } from '../translations.js'
 
 export default function Contact({ t }) {
   return (
-    <section id="contact" className="section-padding relative cv-auto">
+    <section id="contact" className="section-padding relative">
       <div className="max-w-4xl mx-auto">
-        <LiquidCard className="p-8 sm:p-12 text-center">
+        <LiquidCard className="p-8 sm:p-12 text-center reveal">
           <span className="text-xs font-bold tracking-widest uppercase font-mono-tag" style={{ color: '#4F8EF7' }}>
             {t.contact.eyebrow}
           </span>
@@ -48,7 +47,7 @@ export default function Contact({ t }) {
               href={personalInfo.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl text-sm font-semibold transition-all hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl text-sm font-semibold transition-opacity hover:opacity-85"
               style={{
                 background: 'linear-gradient(135deg, #24292e, #0d1117)',
                 border: '1px solid rgba(255,255,255,0.1)',
@@ -64,7 +63,7 @@ export default function Contact({ t }) {
               href={personalInfo.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl text-sm font-semibold transition-all hover:-translate-y-0.5"
+              className="group inline-flex items-center gap-2.5 px-5 py-3 rounded-2xl text-sm font-semibold transition-opacity hover:opacity-85"
               style={{
                 background: 'linear-gradient(135deg, #0A66C2, #004182)',
                 border: '1px solid rgba(255,255,255,0.12)',
@@ -95,7 +94,7 @@ export function Footer({ t }) {
             href={personalInfo.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:text-[#4F8EF7]"
+            className="w-8 h-8 rounded-lg flex items-center justify-center hover:text-[#4F8EF7] transition-colors"
             style={{ background: 'var(--bg-card)', border: '1px solid var(--border-card)', color: 'var(--text-secondary)' }}
             aria-label="GitHub"
           >
@@ -105,7 +104,7 @@ export function Footer({ t }) {
             href={personalInfo.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors hover:text-[#0A66C2]"
+            className="w-8 h-8 rounded-lg flex items-center justify-center hover:text-[#0A66C2] transition-colors"
             style={{ background: 'var(--bg-card)', border: '1px solid var(--border-card)', color: 'var(--text-secondary)' }}
             aria-label="LinkedIn"
           >

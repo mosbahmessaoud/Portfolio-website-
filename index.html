@@ -21,26 +21,43 @@
 
     <title>Mosbah Messaoud — Backend Engineer</title>
 
-    <!-- Fonts: async-loaded, non-blocking -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <!-- ✅ PERF: Preload LCP hero image (WebP + JPEG fallback) -->
+    <link rel="preload" as="image" href="/photopr.webp" type="image/webp"
+          imagesrcset="/photopr.webp 1x, /photopr@2x.webp 2x" fetchpriority="high" />
+
+    <!-- ✅ PERF: DNS prefetch for Google Fonts (non-blocking) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=optional"
-    />
+
+    <!-- ✅ PERF: Load fonts async with font-display=swap to avoid FOIT -->
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=optional"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
       media="print"
       onload="this.media='all'"
     />
     <noscript>
       <link
         rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=optional"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap"
       />
     </noscript>
+
+    <!-- ✅ CLS: Inline critical font fallback so layout is stable before webfonts load -->
+    <style>
+      /* System font stack that closely matches Inter metrics to prevent CLS */
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      }
+      /* Inline critical above-the-fold styles to eliminate render-blocking */
+      :root,[data-theme='dark']{--bg-primary:#050510;--text-primary:#fff;}
+      [data-theme='light']{--bg-primary:#f8fafc;--text-primary:#0f172a;}
+      html{background-color:var(--bg-primary);}
+      /* ✅ CLS FIX: Reserve space for hero image before it loads */
+      .hero-img-wrapper { width: 320px; height: 320px; contain: layout style; }
+      @media (max-width: 1024px) { .hero-img-wrapper { width: 288px; height: 288px; } }
+      @media (max-width: 640px)  { .hero-img-wrapper { width: 256px; height: 256px; } }
+    </style>
 
     <script type="application/ld+json">
     {
@@ -59,7 +76,7 @@
     }
     </script>
 
-    <!-- Theme set before paint to avoid flash-of-wrong-theme -->
+    <!-- ✅ PERF: Theme set before paint to avoid flash-of-wrong-theme -->
     <script>
       (function () {
         var saved = localStorage.getItem('theme');

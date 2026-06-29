@@ -1,12 +1,10 @@
 import { FiArrowUpRight, FiCheckCircle, FiUsers } from 'react-icons/fi'
-
 import LiquidCard from './LiquidCard.jsx'
 import { personalInfo } from '../translations.js'
 
-/* Google Play glyph — simplified triangular play-store mark */
 function PlayStoreIcon({ size = 18 }) {
   return (
-    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <path d="M3.6 2.2c-.4.3-.6.8-.6 1.4v17c0 .6.2 1.1.6 1.4l9.4-9.9-9.4-9.9z" fill="#00D9FF" />
       <path d="M16.4 9.9 3.6 2.2c.1 0 .2-.1.3-.1.4 0 .7.1 1 .3l11.4 6.5-3.9 1.4-.5.1z" fill="#00F076" />
       <path d="M16.4 14.1 13 12.5l3.4-3.6 3.9 2.2c.7.4 1.1.9 1.1 1.5s-.4 1.1-1.1 1.5l-3.9 2.2-.4-.2z" fill="#FFC400" />
@@ -22,7 +20,7 @@ function GooglePlayButton({ href, accent }) {
       target="_blank"
       rel="noopener noreferrer"
       dir="ltr"
-      className="inline-flex items-center justify-center gap-2.5 w-full py-3 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
+      className="inline-flex items-center justify-center gap-2.5 w-full py-3 rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity"
       style={{ background: 'linear-gradient(135deg, #1a1a2e, #0f0f1e)', color: '#fff', border: `1px solid ${accent}40` }}
     >
       <PlayStoreIcon size={20} />
@@ -34,9 +32,9 @@ function GooglePlayButton({ href, accent }) {
   )
 }
 
-function ProjectCard({ project, accent, t, liveUrl, playUrl }) {
+function ProjectCard({ project, accent, t, liveUrl, playUrl, delayClass }) {
   return (
-    <LiquidCard className="p-7 sm:p-8 flex flex-col h-full">
+    <LiquidCard className={`p-7 sm:p-8 flex flex-col h-full reveal ${delayClass}`}>
       <div className="flex items-start justify-between gap-4 mb-5">
         <div>
           <span
@@ -55,6 +53,7 @@ function ProjectCard({ project, accent, t, liveUrl, playUrl }) {
         <div
           className="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 font-bold text-white font-mono-tag"
           style={{ background: `linear-gradient(135deg, ${accent}, #9B6EF3)` }}
+          aria-hidden="true"
         >
           {project.name.charAt(0)}
         </div>
@@ -92,15 +91,13 @@ function ProjectCard({ project, accent, t, liveUrl, playUrl }) {
       </div>
 
       <div className="flex flex-col sm:flex-row gap-3">
-        {playUrl && (
-          <GooglePlayButton href={playUrl} accent={accent} />
-        )}
+        {playUrl && <GooglePlayButton href={playUrl} accent={accent} />}
         {liveUrl && (
           <a
             href={liveUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
+            className="inline-flex items-center justify-center gap-2 w-full py-3 rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity"
             style={{ background: `linear-gradient(135deg, ${accent}, #9B6EF3)`, color: '#fff' }}
           >
             {t.projects.viewLive}
@@ -114,9 +111,13 @@ function ProjectCard({ project, accent, t, liveUrl, playUrl }) {
 
 export default function Projects({ t }) {
   return (
-    <section id="projects" className="section-padding relative cv-auto" style={{ borderTop: '1px solid var(--border-card)', borderBottom: '1px solid var(--border-card)' }}>
+    <section
+      id="projects"
+      className="section-padding relative"
+      style={{ borderTop: '1px solid var(--border-card)', borderBottom: '1px solid var(--border-card)' }}
+    >
       <div className="max-w-6xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-14">
+        <div className="text-center max-w-2xl mx-auto mb-14 reveal">
           <span className="text-xl font-bold tracking-widest uppercase font-mono-tag" style={{ color: '#4F8EF7' }}>
             {t.projects.eyebrow}
           </span>
@@ -129,34 +130,10 @@ export default function Projects({ t }) {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <ProjectCard
-            project={t.projects.asuli}
-            accent="#4F8EF7"
-            t={t}
-            liveUrl={null}
-            playUrl={personalInfo.asuliPlayUrl}
-          />
-          <ProjectCard
-            project={t.projects.abdental}
-            accent="#9B6EF3"
-            t={t}
-            liveUrl={personalInfo.abdentalUrl}
-            playUrl={personalInfo.abdentalPlayUrl}
-          />
-          <ProjectCard
-            project={t.projects.traductor}
-            accent="#4ade80"
-            t={t}
-            liveUrl={personalInfo.traductorUrl}
-            playUrl={null}
-          />
-          <ProjectCard
-            project={t.projects.blueciate}
-            accent="#f5a623"
-            t={t}
-            liveUrl={personalInfo.blueciateUrl}
-            playUrl={null}
-          />
+          <ProjectCard project={t.projects.asuli}     accent="#4F8EF7" t={t} liveUrl={null}                      playUrl={personalInfo.asuliPlayUrl}    delayClass="reveal-d1" />
+          <ProjectCard project={t.projects.abdental}  accent="#9B6EF3" t={t} liveUrl={personalInfo.abdentalUrl}  playUrl={personalInfo.abdentalPlayUrl}  delayClass="reveal-d2" />
+          <ProjectCard project={t.projects.traductor} accent="#4ade80" t={t} liveUrl={personalInfo.traductorUrl} playUrl={null}                          delayClass="reveal-d3" />
+          <ProjectCard project={t.projects.blueciate} accent="#f5a623" t={t} liveUrl={personalInfo.blueciateUrl} playUrl={null}                          delayClass="reveal-d4" />
         </div>
       </div>
     </section>

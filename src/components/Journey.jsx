@@ -1,12 +1,11 @@
 import { FiAward, FiBriefcase, FiGlobe } from 'react-icons/fi'
-
 import LiquidCard from './LiquidCard.jsx'
 
 export default function Journey({ t }) {
   return (
-    <section id="journey" className="section-padding relative cv-auto">
+    <section id="journey" className="section-padding relative">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-14">
+        <div className="text-center max-w-2xl mx-auto mb-14 reveal">
           <span className="text-xl font-bold tracking-widest uppercase font-mono-tag" style={{ color: '#4F8EF7' }}>
             {t.journey.eyebrow}
           </span>
@@ -18,7 +17,7 @@ export default function Journey({ t }) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
           {/* Work experience */}
-          <LiquidCard className="p-7 sm:p-8">
+          <LiquidCard className="p-7 sm:p-8 reveal reveal-d1">
             <div className="flex items-center gap-3 mb-6">
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
@@ -49,9 +48,9 @@ export default function Journey({ t }) {
             </div>
           </LiquidCard>
 
-          {/* Education + certs */}
+          {/* Education + certs + languages */}
           <div className="flex flex-col gap-8">
-            <LiquidCard className="p-7 sm:p-8">
+            <LiquidCard className="p-7 sm:p-8 reveal reveal-d2">
               <div className="flex items-center gap-3 mb-6">
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
@@ -65,7 +64,13 @@ export default function Journey({ t }) {
               </div>
               <div className="flex flex-col gap-5">
                 {t.journey.education.map((edu, i) => (
-                  <div key={i} style={{ borderBottom: i < t.journey.education.length - 1 ? '1px solid var(--border-card)' : 'none', paddingBottom: i < t.journey.education.length - 1 ? '1.1rem' : 0 }}>
+                  <div
+                    key={i}
+                    style={{
+                      borderBottom: i < t.journey.education.length - 1 ? '1px solid var(--border-card)' : 'none',
+                      paddingBottom: i < t.journey.education.length - 1 ? '1.1rem' : 0,
+                    }}
+                  >
                     <div className="flex items-start justify-between gap-3">
                       <p className="text-sm font-bold" style={{ color: 'var(--text-primary)' }}>{edu.degree}</p>
                       <span className="text-xs font-mono-tag shrink-0" style={{ color: 'var(--text-muted)' }}>{edu.period}</span>
@@ -90,8 +95,7 @@ export default function Journey({ t }) {
               </div>
             </LiquidCard>
 
-            {/* Languages */}
-            <LiquidCard className="p-7 sm:p-8">
+            <LiquidCard className="p-7 sm:p-8 reveal reveal-d3">
               <div className="flex items-center gap-3 mb-5">
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
