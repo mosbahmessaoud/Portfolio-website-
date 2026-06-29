@@ -450,7 +450,7 @@ export const personalInfo = {
   email: 'mosbah7messaoud@gmail.com',
   phone: '+213 658 890 501',
   github: 'https://github.com/mosbahmessaoud',
-  linkedin: 'http://www.linkedin.com/in/mosbah-messaoud-338a10301',
+  linkedin: 'https://www.linkedin.com/in/messaoud-mosbah-338a10301?utm_source=share_via&utm_content=profile&utm_medium=member_android',
   abdentalUrl: 'https://abdentalsupply.vercel.app/',
   asuliPlayUrl: 'https://play.google.com/store/apps/details?id=com.iTriDev.ASULI&pcampaignid=web_share',
   abdentalPlayUrl: 'https://play.google.com/store/apps/details?id=com.iTriDevel.AB_Dental&pcampaignid=web_share',
