@@ -1,7 +1,7 @@
+import Contact, { Footer } from './components/Contact.jsx'
 import { useEffect, useState } from 'react'
 
 import About from './components/About.jsx'
-import Contact, { Footer } from './components/Contact.jsx'
 import Hero from './components/Hero.jsx'
 import Journey from './components/Journey.jsx'
 import Navbar from './components/Navbar.jsx'
@@ -10,8 +10,7 @@ import { ThemeProvider } from './context/ThemeContext.jsx'
 import { translationData } from './translations.js'
 
 export default function App() {
-  const [lang, setLang] = useState(() => localStorage.getItem('language') || 'ar')
-
+  const [lang, setLang] = useState(() => localStorage.getItem('language') || 'en')
   useEffect(() => {
     localStorage.setItem('language', lang)
     const html = document.documentElement

@@ -17,12 +17,10 @@ export default function Hero({ lang, t }) {
           {/* ── Image side ── */}
           <div className="lg:col-span-5 flex justify-center lg:justify-start order-1">
             <div className="fade-up d0 relative">
-              {/* Ambient glow behind the photo */}
               <div
                 className="absolute inset-0 rounded-[2rem] blur-3xl opacity-40 scale-90"
                 style={{ background: 'linear-gradient(135deg, #4F8EF7, #9B6EF3, #4ade80)' }}
               />
-
               <div
                 className="relative w-64 h-64 sm:w-72 sm:h-72 lg:w-80 lg:h-80 rounded-[2rem] p-[3px]"
                 style={{ background: 'linear-gradient(135deg, #4F8EF7, #9B6EF3, #4ade80)' }}
@@ -44,18 +42,20 @@ export default function Hero({ lang, t }) {
                 </div>
               </div>
 
-              {/* Live status badge */}
-              <div
-                className="absolute -bottom-4 start-6 flex items-center gap-2 px-3.5 py-2 rounded-2xl liquid-card"
-              >
-                <span className="relative flex w-2.5 h-2.5 shrink-0">
+             {/* Live status badge */}
+             <div className="absolute -bottom-4 inset-x-0 flex justify-center">
+              <div className="flex items-center gap-2 px-3.5 py-2 rounded-2xl liquid-card">
+                <span className="relative flex w-2 h-2 shrink-0">
                   <span className="absolute inline-flex w-full h-full rounded-full bg-[#4ade80] pulse-dot" />
-                  <span className="relative inline-flex rounded-full w-2.5 h-2.5 bg-[#4ade80]" />
+                  <span className="relative inline-flex rounded-full w-2 h-2 bg-[#4ade80]" />
                 </span>
                 <span className="text-xs font-bold font-mono-tag whitespace-nowrap" style={{ color: 'var(--text-primary)' }}>
                   {t.status.live} · {t.hero.statApps}
                 </span>
               </div>
+            </div>
+
+              
             </div>
           </div>
 
@@ -75,14 +75,14 @@ export default function Hero({ lang, t }) {
             </div>
 
             {/* Title */}
-            <h1
-              className="fade-up d1 text-4xl sm:text-5xl md:text-6xl font-extrabold leading-[1.1] tracking-tight max-w-2xl"
+            <h3
+              className="fade-up d1 text-4xl sm:text-5xl md:text-5xl font-extrabold leading-[1.1] tracking-tight max-w-2xl"
               style={{ color: 'var(--text-primary)' }}
             >
               {t.hero.title1}
-              <br />
+            <br/>
               <span className="gradient-text">{t.hero.title2}</span>
-            </h1>
+            </h3>
 
             {/* Subtitle */}
             <p
@@ -114,7 +114,7 @@ export default function Hero({ lang, t }) {
             {/* Stats */}
             <div className="fade-up d4 mt-12 grid grid-cols-3 gap-6 sm:gap-10 w-full max-w-md">
               {[
-                { value: '2', label: t.hero.statApps },
+                { value: '5', label: t.hero.statApps },
                 { value: '200+', label: t.hero.statUsers },
                 { value: '3+', label: t.hero.statYears },
               ].map((stat) => (
@@ -128,12 +128,13 @@ export default function Hero({ lang, t }) {
 
         </div>
 
-        {/* ── Live status terminal strip — signature element, full width below ── */}
+        {/* ── Live status terminal strip ── */}
         <div className="fade-up d4 w-full max-w-2xl mx-auto lg:mx-0 mt-16">
           <div
             className="rounded-2xl overflow-hidden font-mono-tag text-xs sm:text-sm"
             style={{ border: '1px solid var(--code-border)', background: 'var(--code-bg)' }}
           >
+            {/* Terminal header */}
             <div
               className="flex items-center gap-2 px-4 py-2.5"
               style={{ borderBottom: '1px solid var(--code-border)' }}
@@ -143,19 +144,31 @@ export default function Hero({ lang, t }) {
               <span className="w-2.5 h-2.5 rounded-full bg-green-400/70" />
               <span className="ms-2" style={{ color: 'var(--text-muted)' }}>{t.status.label}</span>
             </div>
+
+            {/* Terminal rows */}
             <div className="px-4 py-3 flex flex-col gap-2 text-start">
-              <div className="flex items-center justify-between gap-3">
-                <span style={{ color: 'var(--text-secondary)' }}>asuli@google-play</span>
-                <span className="flex items-center gap-1.5 font-bold" style={{ color: '#4ade80' }}>
-                  <FiCheckCircle size={13} /> {t.status.live} · v1.0.15
-                </span>
-              </div>
-              <div className="flex items-center justify-between gap-3">
-                <span style={{ color: 'var(--text-secondary)' }}>abdental@vercel</span>
-                <span className="flex items-center gap-1.5 font-bold" style={{ color: '#4ade80' }}>
-                  <FiCheckCircle size={13} /> {t.status.live} · v1.0.8
-                </span>
-              </div>
+              {[
+                { name: 'asuli@google-play', url: 'https://play.google.com/store/apps/details?id=com.iTriDev.ASULI&pcampaignid=web_share', version: 'v2.1.1' },
+                { name: 'abdental@google-play', url: 'https://play.google.com/store/apps/details?id=com.iTriDevel.AB_Dental&pcampaignid=web_share', version: 'v1.0.8' },
+                { name: 'abdental@vercel', url: 'https://abdentalsupply.vercel.app/', version: 'v1.0.7' },
+                { name: 'BlueCiate@vercel', url: 'https://blueciat.vercel.app/', version: 'v1.0.15' },
+                { name: 'traducteur@vercel', url: 'https://traducteur-officiel.vercel.app/', version: 'v1.0.15' },
+              ].map(({ name, url, version }) => (
+                <div key={name} className="flex items-center justify-between gap-3">
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: 'var(--text-secondary)' }}
+                    className="hover:underline hover:text-white transition-colors"
+                  >
+                    {name}
+                  </a>
+                  <span className="flex items-center gap-1.5 font-bold" style={{ color: '#4ade80' }}>
+                    <FiCheckCircle size={13} /> {t.status.live} · {version}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

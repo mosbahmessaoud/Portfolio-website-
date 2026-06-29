@@ -9,7 +9,7 @@ export default function About({ t }) {
 
           <div className="lg:col-span-7">
             <span
-              className="text-xs font-bold tracking-widest uppercase font-mono-tag"
+              className="text-xl font-bold tracking-widest uppercase font-mono-tag"
               style={{ color: '#4F8EF7' }}
             >
               {t.about.eyebrow}

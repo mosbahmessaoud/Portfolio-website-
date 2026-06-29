@@ -57,20 +57,22 @@ export default function Navbar({ lang, setLang, t }) {
   }
 
   const navStyle = {
-    background: scrolled ? 'var(--nav-bg)' : 'transparent',
-    backdropFilter: scrolled ? 'blur(20px)' : 'none',
-    WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
-    borderBottom: scrolled ? '1px solid var(--nav-border)' : '1px solid transparent',
-    boxShadow: scrolled ? '0 4px 24px rgba(0,0,0,0.08)' : 'none',
-    transition: 'background 0.3s ease, backdrop-filter 0.3s ease, border-color 0.3s ease',
+    background: scrolled ? 'var(--nav-bg)' : 'var(--nav-bg)',
+    opacity: scrolled ? 1 : 0.92,
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
+    border: '1px solid var(--nav-border)',
+    boxShadow: scrolled ? '0 8px 32px rgba(0,0,0,0.14)' : '0 4px 20px rgba(0,0,0,0.06)',
+    borderRadius: '20px',
+    transition: 'opacity 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease',
   }
 
   return (
-    <nav className="fixed top-0 inset-x-0 z-50" style={navStyle}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-18 md:h-20 flex items-center justify-between">
+    <nav className="fixed top-3 sm:top-4 inset-x-3 sm:inset-x-6 lg:inset-x-10 z-50 max-w-6xl mx-auto" style={navStyle}>
+      <div className="px-4 sm:px-6 lg:px-8 h-16 md:h-[4.5rem] flex items-center justify-between">
 
         <button onClick={() => scrollTo('hero')} className="flex items-center gap-3 group">
-          <span className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-tr from-[#4F8EF7] to-[#9B6EF3] text-white font-bold text-base font-mono-tag shadow-lg shrink-0">
+          {/* <span className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center bg-gradient-to-tr from-[#4F8EF7] to-[#9B6EF3] text-white font-bold text-base font-mono-tag shadow-lg shrink-0">
             {!navImgError ? (
               <img
                 src={personalInfo.avatar}
@@ -81,12 +83,12 @@ export default function Navbar({ lang, setLang, t }) {
             ) : (
               'MM'
             )}
-          </span>
-          <div className="hidden sm:flex flex-col items-start leading-tight">
+          </span> */}
+          <div className="sm:flex flex-col items-start leading-tight">
             <span className="text-sm font-bold tracking-wide" style={{ color: 'var(--text-primary)' }}>
               Mosbah Messaoud
             </span>
-            <span className="text-[10px] font-mono-tag" style={{ color: 'var(--text-muted)' }}>
+            <span className="hidden sm:flex text-[10px] font-mono-tag" style={{ color: 'var(--text-muted)' }}>
               Backend Engineer
             </span>
           </div>
@@ -182,12 +184,13 @@ export default function Navbar({ lang, setLang, t }) {
       </div>
 
       <div
-        className="fixed top-[4.5rem] md:top-20 inset-x-0 z-40 md:hidden"
+        className="fixed top-[4.75rem] sm:top-[5.25rem] md:top-[6.5rem] inset-x-3 sm:inset-x-6 lg:inset-x-10 max-w-6xl mx-auto z-40 md:hidden"
         style={{
           background: 'var(--nav-bg)',
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
-          borderBottom: '1px solid var(--nav-border)',
+          border: '1px solid var(--nav-border)',
+          borderRadius: '20px',
           opacity: menuOpen ? 1 : 0,
           pointerEvents: menuOpen ? 'auto' : 'none',
           transform: menuOpen ? 'translateY(0)' : 'translateY(-8px)',

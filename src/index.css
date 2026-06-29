@@ -52,7 +52,7 @@ html { scroll-behavior: smooth; }
 body {
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  font-family: 'Inter', 'Tajawal', system-ui, sans-serif;
+  font-family: 'Inter', 'IBM Plex Sans Arabic', system-ui, sans-serif;
   min-height: 100vh;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -60,7 +60,8 @@ body {
 }
 
 :lang(ar), [dir="rtl"] {
-  font-family: 'Tajawal', 'Inter', system-ui, sans-serif;
+  font-family: 'IBM Plex Sans Arabic', 'Inter', system-ui, sans-serif;
+  letter-spacing: 0;
 }
 
 .font-mono-tag {

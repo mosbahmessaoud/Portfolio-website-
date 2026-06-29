@@ -7,7 +7,7 @@ export default function Journey({ t }) {
     <section id="journey" className="section-padding relative cv-auto">
       <div className="max-w-6xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs font-bold tracking-widest uppercase font-mono-tag" style={{ color: '#4F8EF7' }}>
+          <span className="text-xl font-bold tracking-widest uppercase font-mono-tag" style={{ color: '#4F8EF7' }}>
             {t.journey.eyebrow}
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold mt-3" style={{ color: 'var(--text-primary)' }}>

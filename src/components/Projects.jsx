@@ -117,7 +117,7 @@ export default function Projects({ t }) {
     <section id="projects" className="section-padding relative cv-auto" style={{ borderTop: '1px solid var(--border-card)', borderBottom: '1px solid var(--border-card)' }}>
       <div className="max-w-6xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-14">
-          <span className="text-xs font-bold tracking-widest uppercase font-mono-tag" style={{ color: '#4F8EF7' }}>
+          <span className="text-xl font-bold tracking-widest uppercase font-mono-tag" style={{ color: '#4F8EF7' }}>
             {t.projects.eyebrow}
           </span>
           <h2 className="text-3xl sm:text-4xl font-extrabold mt-3 mb-4" style={{ color: 'var(--text-primary)' }}>
@@ -142,6 +142,20 @@ export default function Projects({ t }) {
             t={t}
             liveUrl={personalInfo.abdentalUrl}
             playUrl={personalInfo.abdentalPlayUrl}
+          />
+          <ProjectCard
+            project={t.projects.traductor}
+            accent="#4ade80"
+            t={t}
+            liveUrl={personalInfo.traductorUrl}
+            playUrl={null}
+          />
+          <ProjectCard
+            project={t.projects.blueciate}
+            accent="#f5a623"
+            t={t}
+            liveUrl={personalInfo.blueciateUrl}
+            playUrl={null}
           />
         </div>
       </div>
