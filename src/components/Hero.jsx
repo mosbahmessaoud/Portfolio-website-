@@ -81,7 +81,7 @@ export default function Hero({ lang, t }) {
                     <span className="relative inline-flex rounded-full w-2 h-2 bg-[#4ade80]" />
                   </span>
                   <span className="text-xs font-bold font-mono-tag whitespace-nowrap" style={{ color: 'var(--text-primary)' }}>
-                    {t.status.live} · {t.hero.statApps}
+                    Software · Engineer
                   </span>
                 </div>
               </div>
