@@ -456,5 +456,5 @@ export const personalInfo = {
   abdentalPlayUrl: 'https://play.google.com/store/apps/details?id=com.iTriDevel.AB_Dental&pcampaignid=web_share',
   traductorUrl: 'https://traducteur-officiel.vercel.app/',
   blueciateUrl: 'https://blueciat.vercel.app/',
-  avatar: '../assets/photo pr_.jpg',
+  avatar: '/photopr.jpg',
 }
