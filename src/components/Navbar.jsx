@@ -107,7 +107,7 @@ export default function Navbar({ lang, setLang, t }) {
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-2">
+        <div className="md:flex items-center gap-2">
           <button
             onClick={toggleTheme}
             className="p-2.5 rounded-xl transition-colors duration-200"
